@@ -1,0 +1,15 @@
+<div class="Filter" *ngIf="true">
+  <div *ngIf="filteredFirstName">First name filter
+    <app-user *ngFor="let user of firstNameFilter(filteredFirstName, users)" [user]="user"></app-user>
+  </div>
+  <div *ngIf="filteredLastName">Last name filter
+    <app-user *ngFor="let user of lastNameFilter(filteredLastName)" [user]="user"></app-user>
+  </div>
+  <div *ngIf="filteredAge">Age filter
+    <app-user *ngFor="let user of ageFilter(filteredAge)" [user]="user"></app-user>
+  </div>
+  <div *ngIf="filteredCity">City filter
+    <app-user *ngFor="let user of cityFilter(filteredCity, users)" [user]="user"></app-user>
+    <app-user *ngFor="let user of cityFilter(filteredCity, firstNameFilter(filteredFirstName, users))" [user]="user"></app-user>
+  </div>
+</div>
