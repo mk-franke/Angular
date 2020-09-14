@@ -9,10 +9,12 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class FilterComponent implements OnInit {
 
-  filteredFirstName: string;
-  filteredLastName: string;
-  filteredAge: number;
-  filteredCity: string;
+  filterObject: User = {
+    firstName: null,
+    lastName: null,
+    age: null,
+    city: null
+  };
 
   users: User[] = [
     {
@@ -35,55 +37,28 @@ export class FilterComponent implements OnInit {
     }
   ];
 
-  firstNameFilter(firstName: string, users: User[]): User[] {
-    const filteredUsers: User[] = [];
-    users.forEach(user => {
-      if (user.firstName === firstName) {
-        filteredUsers.push(user);
-      }
-    });
-    return filteredUsers;
-  }
-
-  lastNameFilter(lastName: string): User[] {
-    const filteredUsers: User[] = [];
-    this.users.forEach(user => {
-      if (user.lastName === lastName) {
-        filteredUsers.push(user);
-      }
-    });
-    return filteredUsers;
-  }
-
-  ageFilter(age: number): User[] {
-    const filteredUsers: User[] = [];
-    this.users.forEach(user => {
-      if (user.age === age) {
-        filteredUsers.push(user);
-      }
-    });
-    return filteredUsers;
-  }
-
-  cityFilter(city: string, users: User[]): User[] {
-    const filteredUsers: User[] = [];
-    users.forEach(user => {
-      if (user.city === city) {
-        filteredUsers.push(user);
-      }
-    });
-    return filteredUsers;
-  }
-
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.filteredFirstName = params.firstName;
-      this.filteredLastName = params.lastName;
-      this.filteredAge = params.age;
-      this.filteredCity = params.city;
+      Object.keys(params).forEach((key) =>
+        this.filterObject[key] = params[key]
+      );
     });
+  }
+
+  filter(users: User[], filter: User): User[] {
+    const filteredUsers: User[] = [];
+    this.users.forEach(user => {
+      Object.keys(filter).forEach(key => {
+        if (filter[key] !== null) {
+          if (user[key].toString() === filter[key].toString()) {
+            filteredUsers.push(user);
+          }
+        }
+      });
+    });
+    return filteredUsers.length === 0 ? users : filteredUsers;
   }
 
 }
