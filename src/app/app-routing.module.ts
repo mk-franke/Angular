@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {FilterComponent} from './component/filter/filter.component';
 import {UsersContainerComponent} from './component/users-container/users-container.component';
+import {UserLayoutComponent} from './component/user-layout/user-layout.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
   },
   {
     path: 'users/:id',
-    component: FilterComponent
+    component: UserLayoutComponent
   }
 ];
 
